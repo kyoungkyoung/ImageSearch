@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_search_app/model/image.dart';
 import 'package:http/http.dart' as http;
-import 'package:pixabay_picker/pixabay_api.dart';
 import 'dart:convert';
 
 class SearchPage3 extends StatefulWidget {
@@ -14,10 +13,7 @@ class SearchPage3 extends StatefulWidget {
 class _SearchPage3State extends State<SearchPage3> {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
-  String _keyword = 'laptop, workspace, desk';
-  String _imageUrl =
-      'https://pixabay.com/get/gcefbd8692c8d2396664e1a4b8dbe6eef8de417828639865846e1c4503d8b0deac81a791604ad00b277d11c5dd0b0ee3c_640.jpg';
-  var _list;
+  List<PixabayImage> _list = [];
 
   @override
   void dispose() {
@@ -28,6 +24,15 @@ class _SearchPage3State extends State<SearchPage3> {
   @override
   void initState() {
     super.initState();
+    init();
+  }
+
+  init() async{
+    List<PixabayImage> image =
+    await fetchList('iphone');
+    setState(() {
+      _list = image;
+    });
   }
 
   @override
@@ -70,11 +75,13 @@ class _SearchPage3State extends State<SearchPage3> {
                     ),
                     onTap: () async {
                       if (_formKey.currentState.validate()) {
-                        List<PixabayImage> image =
-                            await fetchList(_searchController.text);
-                        setState(() {
-                          _list = image;
-                        });
+                        if (_list.isNotEmpty) {
+                          List<PixabayImage> image =
+                              await fetchList(_searchController.text);
+                          setState(() {
+                            _list = image;
+                          });
+                        }
                       }
                     },
                   ),
@@ -88,34 +95,21 @@ class _SearchPage3State extends State<SearchPage3> {
                 ListView(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  children: [..._list.map((e) => Text(e.tags))],
+                  children: [
+                    ..._list.map((e) {
+                      return Column(children: [
+                        Image.network(
+                          e.webformatURL,
+                          width: 100,
+                        ),
+                        Text(e.tags),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ]);
+                    }),
+                  ],
                 ),
-
-                // Image.network(
-                //   _imageUrl,
-                //   width: 200,
-                // ),
-                // Text(_keyword),
-                // Text(_list.toString()),
-                // FutureBuilder(
-                //     future: _list,
-                //     builder: (context, snapshot) {
-                //       if (snapshot.connectionState == ConnectionState.waiting) {
-                //         return Center(child: CircularProgressIndicator());
-                //       } else if (snapshot.hasError) {
-                //         return Text('에러가 발생했습니다');
-                //       } else if (!snapshot.hasData) {
-                //         return Text('데이터가 없습니다');
-                //       } else {
-                //         _list = snapshot.data;
-                //         return ListView(
-                //           shrinkWrap: true,
-                //           physics: NeverScrollableScrollPhysics(),
-                //           children: _list.map((e) => Text(e['tags'])).toList(),
-                //         );
-                //       }
-                //
-                //     })
               ],
             ),
           )
