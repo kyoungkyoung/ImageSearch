@@ -17,7 +17,7 @@ class _SearchPage3State extends State<SearchPage3> {
   String _keyword = 'laptop, workspace, desk';
   String _imageUrl =
       'https://pixabay.com/get/gcefbd8692c8d2396664e1a4b8dbe6eef8de417828639865846e1c4503d8b0deac81a791604ad00b277d11c5dd0b0ee3c_640.jpg';
-  String _list = '';
+  var _list = '';
 
   @override
   void dispose() {
@@ -36,7 +36,7 @@ class _SearchPage3State extends State<SearchPage3> {
       appBar: AppBar(
         title: Text('Image Search'),
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             padding: EdgeInsets.all(16.0),
@@ -73,14 +73,14 @@ class _SearchPage3State extends State<SearchPage3> {
                         // PixabayMediaProvider api =
                         // PixabayMediaProvider(apiKey: _apiKey, language: "hu");
 
-                        PixabayImage image =
+                        List<PixabayImage> image =
                             await fetchList(_searchController.text);
                         // List<PixabayImage> image =
                         //     await fetchList2(_searchController.text);
                         setState(() {
-                          // _list = image.toString();
-                          _keyword = image.tags;
-                          _imageUrl = image.webformatURL;
+                          _list = image.toString();
+                          // _keyword = image.tags;
+                          // _imageUrl = image.webformatURL;
                         });
                       }
                     },
@@ -92,11 +92,11 @@ class _SearchPage3State extends State<SearchPage3> {
           Container(
             child: Column(
               children: [
-                Image.network(
-                  _imageUrl,
-                  width: 200,
-                ),
-                Text(_keyword),
+                // Image.network(
+                //   _imageUrl,
+                //   width: 200,
+                // ),
+                // Text(_keyword),
                 Text(_list),
               ],
             ),
@@ -106,21 +106,29 @@ class _SearchPage3State extends State<SearchPage3> {
     );
   }
 
-  Future<PixabayImage> fetchList(String search) async {
+  Future<List<PixabayImage>> fetchList(String search) async {
     String url =
         "https://pixabay.com/api/?key=23724478-929bd40db53cfdb192d59041a&q={$search}&image_type=photo";
     final response = await http.get(url);
-    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-    PixabayImage pixabayImage = PixabayImage.fromJson(jsonResponse);
+    var aa = jsonDecode(response.body);
+    print("-------------------");
+    print(aa['hits']);
+    var bb = jsonEncode(aa['hits']);
+
+    // Map<String, dynamic> jsonResponse = jsonDecode(aa['hits']);
+    // PixabayImage pixabayImage = PixabayImage.fromJson(jsonResponse);
+    Iterable jsonResponse = jsonDecode(bb);
+    List<PixabayImage> list =
+        jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
 
     // PixabayImage pixabayImage = json2.fromJson(jsonResponse);
     print("sdafsdfasdfasdfasfasf");
-    print(pixabayImage);
+    // print(pixabayImage);
     // Iterable jsonResponse = jsonDecode(response.body);
     // List<PixabayImage> list =
     //     jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
-    // print(list);
-    return pixabayImage;
+    print(list);
+    return list;
   }
 
 //

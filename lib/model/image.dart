@@ -6,12 +6,12 @@ class PixabayImage {
   PixabayImage(this.tags, this.webformatURL, this.hits);
 
   PixabayImage.fromJson(Map<String, dynamic> json) {
-    hits = json['hits'];
-    print("=======================");
-    print(hits);
-    print(hits.length);
-    tags = json['hits'][0]['tags'];
-    webformatURL = json['hits'][0]['webformatURL'];
+    // hits = json['hits'];
+    // print("=======================");
+    // print(hits);
+    // print(hits.length);
+    tags = json['tags'];
+    webformatURL = json['webformatURL'];
   }
 
   // hits.fromJson(Map<String, dynamic> json){
@@ -20,7 +20,6 @@ class PixabayImage {
 
   @override
   String toString() {
-    int count;
     return "PixabayImage{tags: $tags, webformatURL: $webformatURL}";
   }
 }
