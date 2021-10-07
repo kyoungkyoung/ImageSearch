@@ -1,22 +1,26 @@
-class PixabayImage{
+class PixabayImage {
   String tags;
-  String previewURL;
-  // int total;
-  // var hits;
+  String webformatURL;
+  var hits;
 
+  PixabayImage(this.tags, this.webformatURL, this.hits);
 
-  PixabayImage(this.tags, this.previewURL);
-
-  PixabayImage.fromJson(Map<String, dynamic> json){
+  PixabayImage.fromJson(Map<String, dynamic> json) {
+    hits = json['hits'];
+    print("=======================");
+    print(hits);
+    print(hits.length);
     tags = json['hits'][0]['tags'];
-    previewURL = json['hits'][0]['previewURL'];
-    // total = json['total'];
-    // hits = json['hits'];
+    webformatURL = json['hits'][0]['webformatURL'];
   }
+
+  // hits.fromJson(Map<String, dynamic> json){
+  //
+  // }
 
   @override
   String toString() {
-    return "PixabayImage{tags: $tags, previewURL: $previewURL}";
+    int count;
+    return "PixabayImage{tags: $tags, webformatURL: $webformatURL}";
   }
-
 }

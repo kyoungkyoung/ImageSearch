@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_search_app/model/image.dart';
 import 'package:http/http.dart' as http;
+import 'package:pixabay_picker/pixabay_api.dart';
 import 'dart:convert';
-import 'package:pixabay_picker/pixabay_picker.dart';
 
 class SearchPage3 extends StatefulWidget {
   const SearchPage3({Key key}) : super(key: key);
@@ -14,7 +14,10 @@ class SearchPage3 extends StatefulWidget {
 class _SearchPage3State extends State<SearchPage3> {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
-  String _keyword = '';
+  String _keyword = 'laptop, workspace, desk';
+  String _imageUrl =
+      'https://pixabay.com/get/gcefbd8692c8d2396664e1a4b8dbe6eef8de417828639865846e1c4503d8b0deac81a791604ad00b277d11c5dd0b0ee3c_640.jpg';
+  String _list = '';
 
   @override
   void dispose() {
@@ -65,12 +68,19 @@ class _SearchPage3State extends State<SearchPage3> {
                       Icons.search,
                       size: 50,
                     ),
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState.validate()) {
-                        fetchList(_searchController.text).then((value) {
-                          setState(() {
-                            _keyword = value.tags;
-                          });
+                        // PixabayMediaProvider api =
+                        // PixabayMediaProvider(apiKey: _apiKey, language: "hu");
+
+                        PixabayImage image =
+                            await fetchList(_searchController.text);
+                        // List<PixabayImage> image =
+                        //     await fetchList2(_searchController.text);
+                        setState(() {
+                          // _list = image.toString();
+                          _keyword = image.tags;
+                          _imageUrl = image.webformatURL;
                         });
                       }
                     },
@@ -80,7 +90,16 @@ class _SearchPage3State extends State<SearchPage3> {
             ),
           ),
           Container(
-            child: Text(_keyword),
+            child: Column(
+              children: [
+                Image.network(
+                  _imageUrl,
+                  width: 200,
+                ),
+                Text(_keyword),
+                Text(_list),
+              ],
+            ),
           )
         ],
       ),
@@ -91,10 +110,11 @@ class _SearchPage3State extends State<SearchPage3> {
     String url =
         "https://pixabay.com/api/?key=23724478-929bd40db53cfdb192d59041a&q={$search}&image_type=photo";
     final response = await http.get(url);
-    print('=========================');
     Map<String, dynamic> jsonResponse = jsonDecode(response.body);
     PixabayImage pixabayImage = PixabayImage.fromJson(jsonResponse);
 
+    // PixabayImage pixabayImage = json2.fromJson(jsonResponse);
+    print("sdafsdfasdfasdfasfasf");
     print(pixabayImage);
     // Iterable jsonResponse = jsonDecode(response.body);
     // List<PixabayImage> list =
@@ -103,19 +123,19 @@ class _SearchPage3State extends State<SearchPage3> {
     return pixabayImage;
   }
 
-// Future<List<PixabayImage>> fetchList(String search) async {
+//
+// fetchList2(String search) async {
 //   String url =
 //       "https://pixabay.com/api/?key=23724478-929bd40db53cfdb192d59041a&q={$search}&image_type=photo";
 //   final response = await http.get(url);
-//   print('=========================');
-//   Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-//   PixabayImage pixabayImage = PixabayImage.fromJson(jsonResponse);
+//   // Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+//   // PixabayImage pixabayImage = PixabayImage.fromJson(jsonResponse);
 //
-//   // Iterable jsonResponse = jsonDecode(response.body);
-//   // List<PixabayImage> list =
-//   //     jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
-//   // print(list);
-//   return list;
+//   // print(pixabayImage);
+//   var jsonResponse = jsonDecode(response.body);
+//   List<PixabayImage> pixabayImage =
+//       jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
+//   print(pixabayImage);
+//   return pixabayImage;
 // }
-
 }
