@@ -9,7 +9,8 @@ class Trader {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Trader && runtimeType == other.runtimeType && name == other.name;
+          other is Trader && runtimeType == other.runtimeType &&
+              name == other.name;
 
   @override
   int get hashCode => name.hashCode;
@@ -38,7 +39,7 @@ Set<int> setNumber = {1, 2, 1, 2};
 
 void main() {
   int totalF =
-      numbers.fold(0, (previousValue, element) => previousValue + element);
+  numbers.fold(0, (previousValue, element) => previousValue + element);
   int totalR = numbers.reduce((value, element) {
     return value + 10;
   });
@@ -67,7 +68,7 @@ void main() {
   print("---------------------------");
 
   // A.
-  transacions
+  transactions
     ..sort((Transaction a, Transaction b) => a.value.compareTo(b.value))
 
 
@@ -80,8 +81,8 @@ void main() {
   // case 1.
   print("3-1.");
   List<String> name = [];
-  for(int i=0; i<transactions.length; i++){
-    if(transactions[i].trader.city == "Cambridge"){
+  for (int i = 0; i < transactions.length; i++) {
+    if (transactions[i].trader.city == "Cambridge") {
       name.add(transactions[i].trader.name);
     }
   }
@@ -92,7 +93,8 @@ void main() {
   // case 2.
   print("3-2.");
   List<String> name2 = [];
-  name2 = transactions.where((e) => e.trader.city == "Cambridge").map((e) => e.trader.name).toList();
+  name2 = transactions.where((e) => e.trader.city == "Cambridge").map((e) => e
+      .trader.name).toList();
   name2.sort((a, b) => a.compareTo(b));
   name2.toSet().forEach(print);
   print("---------------------------");
@@ -109,8 +111,8 @@ void main() {
   print("5-1.");
   // case 1.
   String milanExist = 'no';
-  for(int i=0; i<transactions.length; i++){
-    if(transactions[i].trader.city == "Milan"){
+  for (int i = 0; i < transactions.length; i++) {
+    if (transactions[i].trader.city == "Milan") {
       milanExist = "yes";
     }
   }
@@ -120,7 +122,9 @@ void main() {
   // case 2.
   print("5-2.");
   String milanExist2 = 'no';
-  if(transactions.where((e) => e.trader.city == "Milan").isNotEmpty){
+  if (transactions
+      .where((e) => e.trader.city == "Milan")
+      .isNotEmpty) {
     milanExist2 = "yes";
   }
   print(milanExist2);
@@ -133,8 +137,8 @@ void main() {
 // 6. 케임브리지에 거주하는 거래자의 모든 트랙잭션값을 출력하시오
   // case 1.
   print("6-1.");
-  for(int i=0; i<transactions.length; i++){
-    if(transactions[i].trader.city == "Cambridge"){
+  for (int i = 0; i < transactions.length; i++) {
+    if (transactions[i].trader.city == "Cambridge") {
       print(transactions[i].value);
     }
   }
@@ -142,12 +146,14 @@ void main() {
 
   // case 2.
   print("6-2.");
-  transactions.where((e) => e.trader.city == "Cambridge").map((e) => e.value).forEach(print);
+  transactions.where((e) => e.trader.city == "Cambridge")
+      .map((e) => e.value)
+      .forEach(print);
   print("---------------------------");
 
   // A.
   transactions.where((e) => e.trader.city == 'Cambridge').forEach((e) {
-    print(e.value)
+    print(e.value);
   });
 
 // 7. 전체 트랜잭션 중 최대값을 얼마인가?
@@ -161,7 +167,7 @@ void main() {
   print("7-2.");
   List<int> values2 = transactions.map((e) => e.value).toList();
   values2.sort((a, b) => a.compareTo(b));
-  print(values2[values.length-1]);
+  print(values2[values.length - 1]);
   print("---------------------------");
 
 // 8. 전체 트랜잭션 중 최소값은 얼마인가?
@@ -179,9 +185,8 @@ void main() {
 
 
 // 9. 총합 구하기
-transactions.fold<int>(0, (previousValue, element) => previousValue + element.value);
-
-
+  transactions.fold<int>(
+      0, (previousValue, element) => previousValue + element.value);
 }
 
 
