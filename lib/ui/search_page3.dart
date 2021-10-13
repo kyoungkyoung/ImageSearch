@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:image_search_app/model/image.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_search_app/model/image.dart';
 
 class SearchPage3 extends StatefulWidget {
   const SearchPage3({Key key}) : super(key: key);
@@ -13,11 +14,14 @@ class SearchPage3 extends StatefulWidget {
 class _SearchPage3State extends State<SearchPage3> {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
+  final _searchControllerOnair = TextEditingController();
   List<PixabayImage> _list = [];
+  String _query = '';
 
   @override
   void dispose() {
     _searchController.dispose();
+    _searchControllerOnair.dispose();
     super.dispose();
   }
 
@@ -27,9 +31,8 @@ class _SearchPage3State extends State<SearchPage3> {
     init();
   }
 
-  init() async{
-    List<PixabayImage> image =
-    await fetchList('iphone');
+  init() async {
+    List<PixabayImage> image = await fetchList('iphone');
     setState(() {
       _list = image;
     });
@@ -89,29 +92,35 @@ class _SearchPage3State extends State<SearchPage3> {
               ),
             ),
           ),
-          Container(
-            child: Column(
-              children: [
-                ListView(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: [
-                    ..._list.map((e) {
-                      return Column(children: [
-                        Image.network(
-                          e.webformatURL,
-                          width: 100,
-                        ),
-                        Text(e.tags),
-                        SizedBox(
-                          height: 20,
-                        )
-                      ]);
-                    }),
-                  ],
-                ),
-              ],
-            ),
+          TextField(
+            // controller: _searchControllerOnair, onChanged에서 값이 변하면 _query에 값을 입력해주기 때문에 여기서 controller 필요없다
+            onChanged: (query) {
+              setState(() {
+                _query = query;
+              });
+            },
+          ),
+          SizedBox(
+            width: 2,
+          ),
+          ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              ..._list.where((e) => e.tags.toLowerCase().contains(_query.trim().toLowerCase())).map((e) {
+                return Column(children: [
+                  Image.network(
+                    e.webformatURL,
+                    // fit: BoxFit.fill,
+                    width: 100,
+                  ),
+                  Text(e.tags),
+                  SizedBox(
+                    height: 20,
+                  )
+                ]);
+              }),
+            ],
           )
         ],
       ),
