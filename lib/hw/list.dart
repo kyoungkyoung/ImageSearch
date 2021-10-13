@@ -9,8 +9,7 @@ class Trader {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Trader && runtimeType == other.runtimeType &&
-              name == other.name;
+      other is Trader && runtimeType == other.runtimeType && name == other.name;
 
   @override
   int get hashCode => name.hashCode;
@@ -39,7 +38,7 @@ Set<int> setNumber = {1, 2, 1, 2};
 
 void main() {
   int totalF =
-  numbers.fold(0, (previousValue, element) => previousValue + element);
+      numbers.fold(0, (previousValue, element) => previousValue + element);
   int totalR = numbers.reduce((value, element) {
     return value + 10;
   });
@@ -60,7 +59,6 @@ void main() {
 
   print(setNumber); // {1, 2}
 
-
 // 1. 2011년에 일어난 모든 트랜잭션을 찾아 값을 오름차순으로 정리하여 나열하시오
   print("1.");
   transactions.sort((a, b) => a.value.compareTo(b.value));
@@ -70,7 +68,6 @@ void main() {
   // A.
   transactions
     ..sort((Transaction a, Transaction b) => a.value.compareTo(b.value));
-
 
 // 2. 거래자가 근무하는 모든 도시를 중복 없이 나열하시오
   print("2.");
@@ -93,8 +90,10 @@ void main() {
   // case 2.
   print("3-2.");
   List<String> name2 = [];
-  name2 = transactions.where((e) => e.trader.city == "Cambridge").map((e) => e
-      .trader.name).toList();
+  name2 = transactions
+      .where((e) => e.trader.city == "Cambridge")
+      .map((e) => e.trader.name)
+      .toList();
   name2.sort((a, b) => a.compareTo(b));
   name2.toSet().forEach(print);
   print("---------------------------");
@@ -122,9 +121,7 @@ void main() {
   // case 2.
   print("5-2.");
   String milanExist2 = 'no';
-  if (transactions
-      .where((e) => e.trader.city == "Milan")
-      .isNotEmpty) {
+  if (transactions.where((e) => e.trader.city == "Milan").isNotEmpty) {
     milanExist2 = "yes";
   }
   print(milanExist2);
@@ -132,7 +129,6 @@ void main() {
 
   // A.
   transactions.any((e) => e.trader.city == 'Milan');
-
 
 // 6. 케임브리지에 거주하는 거래자의 모든 트랙잭션값을 출력하시오
   // case 1.
@@ -146,7 +142,8 @@ void main() {
 
   // case 2.
   print("6-2.");
-  transactions.where((e) => e.trader.city == "Cambridge")
+  transactions
+      .where((e) => e.trader.city == "Cambridge")
       .map((e) => e.value)
       .forEach(print);
   print("---------------------------");
@@ -183,11 +180,7 @@ void main() {
   values2.sort((a, b) => a.compareTo(b));
   print(values2[0]);
 
-
 // 9. 총합 구하기
   transactions.fold<int>(
       0, (previousValue, element) => previousValue + element.value);
 }
-
-
-
