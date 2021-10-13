@@ -69,7 +69,7 @@ void main() {
 
   // A.
   transactions
-    ..sort((Transaction a, Transaction b) => a.value.compareTo(b.value))
+    ..sort((Transaction a, Transaction b) => a.value.compareTo(b.value));
 
 
 // 2. 거래자가 근무하는 모든 도시를 중복 없이 나열하시오

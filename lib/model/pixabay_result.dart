@@ -4,9 +4,10 @@
 
 class Pixabay_result {
   Pixabay_result({
-      this.total, 
-      this.totalHits, 
-      this.hits,});
+    this.total,
+    this.totalHits,
+    this.hits,
+  });
 
   Pixabay_result.fromJson(dynamic json) {
     total = json['total'];
@@ -18,6 +19,7 @@ class Pixabay_result {
       });
     }
   }
+
   int total;
   int totalHits;
   List<Hits> hits;
@@ -31,7 +33,6 @@ class Pixabay_result {
     }
     return map;
   }
-
 }
 
 /// id : 336378
@@ -59,28 +60,29 @@ class Pixabay_result {
 
 class Hits {
   Hits({
-      this.id, 
-      this.pageURL, 
-      this.type, 
-      this.tags, 
-      this.previewURL, 
-      this.previewWidth, 
-      this.previewHeight, 
-      this.webformatURL, 
-      this.webformatWidth, 
-      this.webformatHeight, 
-      this.largeImageURL, 
-      this.imageWidth, 
-      this.imageHeight, 
-      this.imageSize, 
-      this.views, 
-      this.downloads, 
-      this.collections, 
-      this.likes, 
-      this.comments, 
-      this.userId, 
-      this.user, 
-      this.userImageURL,});
+    this.id,
+    this.pageURL,
+    this.type,
+    this.tags,
+    this.previewURL,
+    this.previewWidth,
+    this.previewHeight,
+    this.webformatURL,
+    this.webformatWidth,
+    this.webformatHeight,
+    this.largeImageURL,
+    this.imageWidth,
+    this.imageHeight,
+    this.imageSize,
+    this.views,
+    this.downloads,
+    this.collections,
+    this.likes,
+    this.comments,
+    this.userId,
+    this.user,
+    this.userImageURL,
+  });
 
   Hits.fromJson(dynamic json) {
     id = json['id'];
@@ -106,6 +108,7 @@ class Hits {
     user = json['user'];
     userImageURL = json['userImageURL'];
   }
+
   int id;
   String pageURL;
   String type;
@@ -155,5 +158,4 @@ class Hits {
     map['userImageURL'] = userImageURL;
     return map;
   }
-
 }

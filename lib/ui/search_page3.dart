@@ -107,7 +107,11 @@ class _SearchPage3State extends State<SearchPage3> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             children: [
-              ..._list.where((e) => e.tags.toLowerCase().contains(_query.trim().toLowerCase())).map((e) {
+              ..._list
+                  .where((e) => e.tags
+                      .toLowerCase()
+                      .contains(_query.trim().toLowerCase()))
+                  .map((e) {
                 return Column(children: [
                   Image.network(
                     e.webformatURL,
