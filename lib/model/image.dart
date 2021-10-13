@@ -1,9 +1,9 @@
 class PixabayImage {
-  String tags;
-  String webformatURL;
-  var hits;
+  late String tags;
+  late String webformatURL;
+  late var hits;
 
-  PixabayImage(this.tags, this.webformatURL, this.hits);
+  PixabayImage({required this.tags, required this.webformatURL, required this.hits});
 
   PixabayImage.fromJson(Map<String, dynamic> json) {
     tags = json['tags'];

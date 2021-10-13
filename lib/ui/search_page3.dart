@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_search_app/model/image.dart';
 
 class SearchPage3 extends StatefulWidget {
-  const SearchPage3({Key key}) : super(key: key);
+  const SearchPage3({Key? key}) : super(key: key);
 
   @override
   _SearchPage3State createState() => _SearchPage3State();
@@ -60,8 +60,8 @@ class _SearchPage3State extends State<SearchPage3> {
                         hintText: 'search',
                       ),
                       controller: _searchController,
-                      validator: (value) {
-                        if (value.trim().isEmpty) {
+                      validator: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return '검색어를 입력하세요';
                         }
                         return null;
@@ -77,7 +77,7 @@ class _SearchPage3State extends State<SearchPage3> {
                       size: 50,
                     ),
                     onTap: () async {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         if (_list.isNotEmpty) {
                           List<PixabayImage> image =
                               await fetchList(_searchController.text);
@@ -134,7 +134,7 @@ class _SearchPage3State extends State<SearchPage3> {
   Future<List<PixabayImage>> fetchList(String search) async {
     String url =
         "https://pixabay.com/api/?key=23724478-929bd40db53cfdb192d59041a&q={$search}&image_type=photo";
-    final response = await http.get(url);
+    final response = await http.get(Uri.parse(url));
     var aa = jsonDecode(response.body);
     print(aa['hits']);
     var bb = jsonEncode(aa['hits']);

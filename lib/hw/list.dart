@@ -35,7 +35,6 @@ final transactions = [
 
 List<int> numbers = [2, 0, 1, 3, 4, 5];
 List<String> alphabet = ['a', 'r', 'd', 'w', 'z'];
-Set<int> setNumber = {1, 2, 1, 2};
 
 void main() {
   int totalF =
@@ -43,7 +42,7 @@ void main() {
   int totalR = numbers.reduce((value, element) {
     return value + 10;
   });
-  int totalR2 = numbers.reduce((value, element) => null);
+  // int totalR2 = numbers.reduce((value, element) => null);
   print(totalF);
   print(totalR);
 
@@ -58,7 +57,6 @@ void main() {
   print(alphabet); // [a, d, r, w, z]
   print('a'.compareTo('n')); // -1
 
-  print(setNumber); // {1, 2}
 
 
 // 1. 2011년에 일어난 모든 트랜잭션을 찾아 값을 오름차순으로 정리하여 나열하시오
@@ -174,14 +172,14 @@ void main() {
   // case 1.
   print("8-1.");
   List<int> values3 = transactions.map((e) => e.value).toList();
-  print(values.reduce(min));
+  print(values3.reduce(min));
   print("---------------------------");
 
   // case 2.
   print("8-2.");
   List<int> values4 = transactions.map((e) => e.value).toList();
-  values2.sort((a, b) => a.compareTo(b));
-  print(values2[0]);
+  values4.sort((a, b) => a.compareTo(b));
+  print(values4[0]);
 
 
 // 9. 총합 구하기
