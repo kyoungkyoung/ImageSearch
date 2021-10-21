@@ -1,45 +1,26 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:image_search_app/data/pixabay_api.dart';
 import 'package:image_search_app/model/image.dart';
+import 'package:image_search_app/view_model/image_view_model.dart';
 
-class SearchPage3 extends StatefulWidget {
-  const SearchPage3({Key? key}) : super(key: key);
 
-  @override
-  _SearchPage3State createState() => _SearchPage3State();
-}
-
-class _SearchPage3State extends State<SearchPage3> {
+class SearchPage5 extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
   final _searchControllerOnair = TextEditingController();
   List<PixabayImage> _list = [];
   String _query = '';
+  final _api = PixabayApi();
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    _searchControllerOnair.dispose();
-    super.dispose();
-  }
+  SearchPage5({Key? key}) : super(key: key);
 
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
 
-  init() async {
-    List<PixabayImage> image = await fetchList('iphone');
-    setState(() {
-      _list = image;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+  final viewModel = ImageViewModel.of(context).viewModel;
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Image Search'),
@@ -79,11 +60,11 @@ class _SearchPage3State extends State<SearchPage3> {
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
                         if (_list.isNotEmpty) {
-                          List<PixabayImage> image =
-                              await fetchList(_searchController.text);
-                          setState(() {
-                            _list = image;
-                          });
+                          List<PixabayImage> image = viewModel.getFetchList(_query);
+                          await _api.fetchList(_searchController.text);
+                          // setState(() {
+                          //   _list = image;
+                          // });
                         }
                       }
                     },
@@ -92,8 +73,19 @@ class _SearchPage3State extends State<SearchPage3> {
               ),
             ),
           ),
+
+          StreamBuilder(
+              initialData: 'iphone',
+              stream: viewModel.
+              builder: (context, snapshot) {
+            return Text('');
+          })
+
+
+
+
+
           TextField(
-            // controller: _searchControllerOnair, onChanged에서 값이 변하면 _query에 값을 입력해주기 때문에 여기서 controller 필요없다
             onChanged: (query) {
               setState(() {
                 _query = query;
@@ -109,8 +101,8 @@ class _SearchPage3State extends State<SearchPage3> {
             children: [
               ..._list
                   .where((e) => e.tags
-                      .toLowerCase()
-                      .contains(_query.trim().toLowerCase()))
+                  .toLowerCase()
+                  .contains(_query.trim().toLowerCase()))
                   .map((e) {
                 return Column(children: [
                   Image.network(
@@ -129,17 +121,5 @@ class _SearchPage3State extends State<SearchPage3> {
         ],
       ),
     );
-  }
-
-  Future<List<PixabayImage>> fetchList(String search) async {
-    String url =
-        "https://pixabay.com/api/?key=23724478-929bd40db53cfdb192d59041a&q={$search}&image_type=photo";
-    final response = await http.get(Uri.parse(url));
-
-    Iterable jsonResponse = jsonDecode(response.body)['hits'];
-    List<PixabayImage> list =
-        jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
-
-    return list;
   }
 }

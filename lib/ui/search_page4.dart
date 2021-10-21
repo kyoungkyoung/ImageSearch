@@ -2,21 +2,29 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_search_app/data/pixabay_api.dart';
 import 'package:image_search_app/model/image.dart';
 
-class SearchPage3 extends StatefulWidget {
-  const SearchPage3({Key? key}) : super(key: key);
+class SearchPage4 extends StatefulWidget {
+  const SearchPage4({Key? key}) : super(key: key);
 
   @override
-  _SearchPage3State createState() => _SearchPage3State();
+  _SearchPage4State createState() => _SearchPage4State();
 }
 
-class _SearchPage3State extends State<SearchPage3> {
+class _SearchPage4State extends State<SearchPage4> {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
   final _searchControllerOnair = TextEditingController();
   List<PixabayImage> _list = [];
   String _query = '';
+  final _api = PixabayApi();
+
+
+
+
+
+
 
   @override
   void dispose() {
@@ -32,7 +40,7 @@ class _SearchPage3State extends State<SearchPage3> {
   }
 
   init() async {
-    List<PixabayImage> image = await fetchList('iphone');
+    List<PixabayImage> image = await _api.fetchList('iphone');
     setState(() {
       _list = image;
     });
@@ -80,7 +88,7 @@ class _SearchPage3State extends State<SearchPage3> {
                       if (_formKey.currentState!.validate()) {
                         if (_list.isNotEmpty) {
                           List<PixabayImage> image =
-                              await fetchList(_searchController.text);
+                              await _api.fetchList(_searchController.text);
                           setState(() {
                             _list = image;
                           });
@@ -131,15 +139,5 @@ class _SearchPage3State extends State<SearchPage3> {
     );
   }
 
-  Future<List<PixabayImage>> fetchList(String search) async {
-    String url =
-        "https://pixabay.com/api/?key=23724478-929bd40db53cfdb192d59041a&q={$search}&image_type=photo";
-    final response = await http.get(Uri.parse(url));
 
-    Iterable jsonResponse = jsonDecode(response.body)['hits'];
-    List<PixabayImage> list =
-        jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
-
-    return list;
-  }
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_search_app/ui/search_page3.dart';
+import 'package:image_search_app/ui/search_page4.dart';
+import 'package:image_search_app/ui/search_page5.dart';
+import 'package:image_search_app/view_model/image_view_model.dart';
+import 'package:image_search_app/view_model/stream_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SearchPage3(),
+      home: ImageViewModel(
+        viewModel: StreamViewModel(query: 'iphone'),
+        child: SearchPage5(),
+      ),
     );
   }
 }
