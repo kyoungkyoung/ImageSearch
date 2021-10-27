@@ -3,23 +3,17 @@ import 'package:image_search_app/data/pixabay_api.dart';
 import 'package:image_search_app/model/image.dart';
 import 'package:image_search_app/view_model/image_view_model.dart';
 
-
 class SearchPage5 extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
   final _searchControllerOnair = TextEditingController();
-  List<PixabayImage> _list = [];
-  String _query = '';
   final _api = PixabayApi();
 
   SearchPage5({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
-  final viewModel = ImageViewModel.of(context).viewModel;
-
+    final viewModel = ImageViewModel.of(context).viewModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,13 +53,9 @@ class SearchPage5 extends StatelessWidget {
                     ),
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        if (_list.isNotEmpty) {
-                          List<PixabayImage> image = viewModel.getFetchList(_query);
-                          await _api.fetchList(_searchController.text);
-                          // setState(() {
-                          //   _list = image;
-                          // });
-                        }
+                        String query = _searchController.text;
+                        viewModel.getFetchList(query);
+                        await _api.fetchList(_searchController.text);
                       }
                     },
                   ),
@@ -73,51 +63,35 @@ class SearchPage5 extends StatelessWidget {
               ),
             ),
           ),
-
-          StreamBuilder(
-              initialData: 'iphone',
-              stream: viewModel.
-              builder: (context, snapshot) {
-            return Text('');
-          })
-
-
-
-
-
-          TextField(
-            onChanged: (query) {
-              setState(() {
-                _query = query;
-              });
+          StreamBuilder<List<PixabayImage>>(
+            stream: viewModel.pixabayApiStreamController,
+            // initialData: viewModel.getFetchList('iphone'),
+            builder: (context, AsyncSnapshot<List<PixabayImage>> snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: Text(''));
+              } else {
+                return ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: snapshot.data!.map((pixabay) {
+                    return Column(
+                      children: [
+                        Image.network(
+                          pixabay.webformatURL,
+                          // fit: BoxFit.fill,
+                          width: 100,
+                        ),
+                        Text(pixabay.tags),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    );
+                  }).toList(),
+                );
+              }
             },
           ),
-          const SizedBox(
-            width: 2,
-          ),
-          ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              ..._list
-                  .where((e) => e.tags
-                  .toLowerCase()
-                  .contains(_query.trim().toLowerCase()))
-                  .map((e) {
-                return Column(children: [
-                  Image.network(
-                    e.webformatURL,
-                    // fit: BoxFit.fill,
-                    width: 100,
-                  ),
-                  Text(e.tags),
-                  const SizedBox(
-                    height: 20,
-                  )
-                ]);
-              }),
-            ],
-          )
         ],
       ),
     );
