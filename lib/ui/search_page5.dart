@@ -64,7 +64,6 @@ class SearchPage5 extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             children: viewModel.getList().map((pixabay) {
-                print(viewModel.getList());
               return Column(
                 children: [
                   Image.network(
