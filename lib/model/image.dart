@@ -6,7 +6,7 @@ class PixabayImage {
   late String tags;
   late String webformatURL;
 
-  PixabayImage();
+  // PixabayImage();
   // PixabayImage({required this.tags, required this.webformatURL});
 
 

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:image_search_app/data/pixabay_api.dart';
 import 'package:image_search_app/model/image.dart';
-import 'package:image_search_app/view_model/image_view_model.dart';
+import 'package:image_search_app/view_model/search_page5_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage5 extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
-  final _searchControllerOnair = TextEditingController();
-  final _api = PixabayApi();
-
+  String query = '';
+  List<PixabayImage> list = [];
   SearchPage5({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ImageViewModel.of(context).viewModel;
-
+    final viewModel = context.watch<SearchPage5ViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Image Search'),
@@ -53,9 +51,8 @@ class SearchPage5 extends StatelessWidget {
                     ),
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        String query = _searchController.text;
+                        query = _searchController.text;
                         viewModel.getFetchList(query);
-                        await _api.fetchList(_searchController.text);
                       }
                     },
                   ),
@@ -63,34 +60,25 @@ class SearchPage5 extends StatelessWidget {
               ),
             ),
           ),
-          StreamBuilder<List<PixabayImage>>(
-            stream: viewModel.pixabayApiStreamController,
-            // initialData: viewModel.getFetchList('iphone'),
-            builder: (context, AsyncSnapshot<List<PixabayImage>> snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(child: Text(''));
-              } else {
-                return ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: snapshot.data!.map((pixabay) {
-                    return Column(
-                      children: [
-                        Image.network(
-                          pixabay.webformatURL,
-                          // fit: BoxFit.fill,
-                          width: 100,
-                        ),
-                        Text(pixabay.tags),
-                        const SizedBox(
-                          height: 20,
-                        )
-                      ],
-                    );
-                  }).toList(),
-                );
-              }
-            },
+          ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: viewModel.getList().map((pixabay) {
+                print(viewModel.getList());
+              return Column(
+                children: [
+                  Image.network(
+                    pixabay.webformatURL,
+                    // fit: BoxFit.fill,
+                    width: 100,
+                  ),
+                  Text(pixabay.tags),
+                  const SizedBox(
+                    height: 20,
+                  )
+                ],
+              );
+            }).toList(),
           ),
         ],
       ),

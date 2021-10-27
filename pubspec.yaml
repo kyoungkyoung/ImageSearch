@@ -39,6 +39,7 @@ dependencies:
   material_floating_search_bar: ^0.2.6
   json_annotation: ^4.1.0
   freezed: ^0.15.0+1
+  provider: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   build_runner: ^2.1.4
   json_serializable: ^5.0.2
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
