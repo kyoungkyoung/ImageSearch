@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: ChangeNotifierProvider(
-        create: (_) => SearchPage5ViewModel(),
+        create: (_) => SearchPage5ViewModel(PixabayApi()),
         child: SearchPage5(),
       ),
     );
