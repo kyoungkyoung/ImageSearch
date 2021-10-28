@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 class SearchPage5 extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
-  String query = '';
-  List<PixabayImage> list = [];
+  String query = 'iphone';
   SearchPage5({Key? key}) : super(key: key);
 
   @override

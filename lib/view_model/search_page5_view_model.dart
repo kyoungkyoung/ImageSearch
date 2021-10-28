@@ -8,8 +8,9 @@ class SearchPage5ViewModel with ChangeNotifier {
   List<PixabayImage> pixabayImageList = [];
 
   void getFetchList(String query) async {
-    pixabayImageList = await pixabayApi.fetchList(query);
-    notifyListeners();
+      pixabayImageList = await pixabayApi.fetchList(query);
+      notifyListeners();
+
   }
 
   List<PixabayImage> getList() {

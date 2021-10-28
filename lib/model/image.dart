@@ -6,10 +6,6 @@ class PixabayImage {
   late String tags;
   late String webformatURL;
 
-  // PixabayImage();
-  // PixabayImage({required this.tags, required this.webformatURL});
-
-
   PixabayImage.fromJson(Map<String, dynamic> json) {
     tags = json['tags'];
     webformatURL = json['webformatURL'];
