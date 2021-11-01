@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_search_app/view_model/stream_view_model.dart';
+import 'package:image_search_app/presentation/stream_view_model.dart';
 
 class ImageViewModel extends InheritedWidget{
   final StreamViewModel viewModel;

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_search_app/data/pixabay_api.dart';
-import 'package:image_search_app/ui/search_page5.dart';
-import 'package:image_search_app/view_model/image_view_model.dart';
-import 'package:image_search_app/view_model/search_page5_view_model.dart';
-import 'package:image_search_app/view_model/stream_view_model.dart';
+import 'package:image_search_app/presentation/search_page5.dart';
+import 'package:image_search_app/presentation/search_page5_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {

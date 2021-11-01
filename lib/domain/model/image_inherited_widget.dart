@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_search_app/model/image.dart';
 
-class ImageInheritedWidget extends InheritedWidget{
+class ImageInheritedWidget extends InheritedWidget {
   final PixabayImage pixabayImage;
 
   const ImageInheritedWidget({
@@ -11,7 +11,8 @@ class ImageInheritedWidget extends InheritedWidget{
   }) : super(key: key, child: child);
 
   static ImageInheritedWidget of(BuildContext context) {
-    final ImageInheritedWidget? result = context.dependOnInheritedWidgetOfExactType<ImageInheritedWidget>();
+    final ImageInheritedWidget? result =
+        context.dependOnInheritedWidgetOfExactType<ImageInheritedWidget();
     assert(result != null, 'No ImageInheritedWidget found in context');
     return result!;
   }
