@@ -2,11 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:image_search_app/presentation/main/search_page5_view_model.dart';
 import 'package:provider/provider.dart';
 
-class SearchPage5 extends StatelessWidget {
+class SearchPage5 extends StatefulWidget {
+  const SearchPage5({Key? key}) : super(key: key);
+
+  @override
+  State<SearchPage5> createState() => _SearchPage5State();
+}
+
+class _SearchPage5State extends State<SearchPage5> {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
-  String query = 'iphone';
-  SearchPage5({Key? key}) : super(key: key);
+
+  @override
+  void initState() {
+    Future.microtask(
+        () => context.read<SearchPage5ViewModel>().getFetchList('iphone'));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +67,7 @@ class SearchPage5 extends StatelessWidget {
                     ),
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        query = _searchController.text;
-                        viewModel.getFetchList(query);
+                        viewModel.getFetchList(_searchController.text);
                       }
                     },
                   ),
@@ -58,25 +75,29 @@ class SearchPage5 extends StatelessWidget {
               ),
             ),
           ),
-          ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: viewModel.pixabayImageList.map((pixabay) {
-              return Column(
-                children: [
-                  Image.network(
-                    pixabay.webformatURL,
-                    // fit: BoxFit.fill,
-                    width: 100,
-                  ),
-                  Text(pixabay.tags),
-                  const SizedBox(
-                    height: 20,
-                  )
-                ],
-              );
-            }).toList(),
-          ),
+          viewModel.isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: viewModel.pixabayImageList.map((pixabay) {
+                    return Column(
+                      children: [
+                        Image.network(
+                          pixabay.webformatURL,
+                          // fit: BoxFit.fill,
+                          width: 100,
+                        ),
+                        Text(pixabay.tags),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    );
+                  }).toList(),
+                ),
         ],
       ),
     );
