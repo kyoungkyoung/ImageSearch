@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_search_app/domain/model/image.dart';
 import 'package:image_search_app/domain/repository/image_repository.dart';
@@ -21,7 +23,10 @@ void main() {
     final result = await searchPage5ViewModel.getFetchList('iphone'); //viewModel 실행해주면 viewModel test가능
 
     // 확인
-    expect(result.length, 10); // result.lengh가 10개냐
+    expect(result.length, min(10, result.length)); // result.lengh가 10개냐
+
+    // 검증
+    verify(mockRepository.fetchList('iphone'));
   });
 }
 

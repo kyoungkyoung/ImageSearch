@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_search_app/domain/model/image.dart';
@@ -25,7 +26,7 @@ class SearchPage5ViewModel with ChangeNotifier {
 
   Future<List<PixabayImage>> getFetchList(String query) async {
     _pixabayImageList = await repository.fetchList(query);
-    _pixabayImageList = _pixabayImageList.getRange(0, 10).toList(); //data를 10개만 가져오기
+    _pixabayImageList = _pixabayImageList.getRange(0, min(_pixabayImageList.length, 10)).toList(); //data를 10개만 가져오기
     notifyListeners();
     return pixabayImageList;
   }
