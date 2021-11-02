@@ -20,11 +20,18 @@ void main() {
     .thenAnswer((realInvocation) async => testImageList);
 
     // 실행
-    final result = await searchPage5ViewModel.getFetchList('iphone'); //viewModel 실행해주면 viewModel test가능
+    // test 1번
+    // final result = await searchPage5ViewModel.getFetchList('iphone'); //viewModel 실행해주면 viewModel test가능
+    // test 2번
+    await searchPage5ViewModel.getFetchList('iphone');
+
+    //Future.delayed(const Duration(seconds: 1)); //비동기이니까 확인 전에 약간 delay를 주기
 
     // 확인
-    expect(result.length, min(10, result.length)); // result.lengh가 10개냐
-
+    // test 1번
+    // expect(result.length, min(10, testImageList.length)); // result.lengh가 10개냐
+    // test 2번
+    expect(searchPage5ViewModel.pixabayImageList.length, min(10, testImageList.length));
     // 검증
     verify(mockRepository.fetchList('iphone'));
   });
