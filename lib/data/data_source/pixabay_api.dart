@@ -1,8 +1,8 @@
-import 'package:image_search_app/model/image.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_search_app/domain/model/image.dart';
 import 'dart:convert';
 
-import 'image_repository.dart';
+import '../../domain/repository/image_repository.dart';
 
 class PixabayApi implements ImageRepository {
 
@@ -18,5 +18,4 @@ class PixabayApi implements ImageRepository {
 
     return list;
   }
-
 }

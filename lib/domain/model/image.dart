@@ -1,10 +1,12 @@
-import 'package:image_search_app/data/pixabay_api.dart';
+import 'package:image_search_app/data/data_source/pixabay_api.dart';
 
 class PixabayImage {
   // late PixabayApi pixabayApi;
 
   late String tags;
   late String webformatURL;
+
+  PixabayImage(this.tags, this.webformatURL);
 
   PixabayImage.fromJson(Map<String, dynamic> json) {
     tags = json['tags'];
