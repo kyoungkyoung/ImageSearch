@@ -208,14 +208,14 @@ packages:
     source: sdk
     version: "0.0.0"
   freezed:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.0+1"
   freezed_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
@@ -327,7 +327,7 @@ packages:
     source: hosted
     version: "1.0.0"
   mockito:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: mockito
       url: "https://pub.dartlang.org"

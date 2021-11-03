@@ -2,48 +2,33 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:image_search_app/domain/model/image.dart';
 import 'package:image_search_app/domain/repository/image_repository.dart';
+import 'package:image_search_app/presentation/main/pixabay_image_state.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage5ViewModel with ChangeNotifier {
   ImageRepository repository;
+  PixabayImageState _state = PixabayImageState();
 
-  List<PixabayImage> _pixabayImageList = [];
-  List<PixabayImage> get pixabayImageList => _pixabayImageList;
-  // 빡시게! 값 변경 안되게
-  // UnmodifiableListView<PixabayImage> get pixabayImageList => UnmodifiableListView(_pixabayImageList);
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  PixabayImageState get state => _state;
 
   SearchPage5ViewModel(this.repository);
 
   //test코드 작성 2
   Future<void> getFetchList(String query) async {
-    _isLoading = true;
+    _state = state.copyWith(isLoading: true);
+    // _state.isLoading = true;
     notifyListeners(); // isLoading이 바뀌었을때 한번 알려주고
-    _pixabayImageList = await repository.fetchList(query);
-    _pixabayImageList = _pixabayImageList.getRange(0, 10).toList(); //data를 10개만 가져오기
 
-    _isLoading=false;
+    final results = await repository.fetchList(query);
+    _state = _state.copyWith(
+        pixabayImageList: results
+            .getRange(
+              0,
+              min(10, results.length),
+            )
+            .toList(),
+        isLoading: false);
     notifyListeners(); // isLoading이 또 바뀌면 다시 알려주고
   }
-
-
-  /* test코드 작성 1
-  Future<List<PixabayImage>> getFetchList(String query) async {
-    _pixabayImageList = await repository.fetchList(query);
-    _pixabayImageList = _pixabayImageList.getRange(0, min(_pixabayImageList.length, 10)).toList(); //data를 10개만 가져오기
-    notifyListeners();
-    return pixabayImageList;
-  }
-  */
-
-
-  //이런 getter는 java방식
-  // List<PixabayImage> getList() {
-  //   // notifyListeners(); -> error : 끊임없이 그림
-  //   return _pixabayImageList;
-  // }
 }

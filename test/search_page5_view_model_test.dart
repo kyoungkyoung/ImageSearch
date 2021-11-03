@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:image_search_app/domain/model/image.dart';
+import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'package:image_search_app/domain/repository/image_repository.dart';
 import 'package:image_search_app/presentation/main/search_page5_view_model.dart';
 import 'package:mockito/annotations.dart';
@@ -31,7 +31,7 @@ void main() {
     // test 1번
     // expect(result.length, min(10, testImageList.length)); // result.lengh가 10개냐
     // test 2번
-    expect(searchPage5ViewModel.pixabayImageList.length, min(10, testImageList.length));
+    expect(searchPage5ViewModel.state.pixabayImageList.length, min(10, testImageList.length));
     // 검증
     verify(mockRepository.fetchList('iphone'));
   });

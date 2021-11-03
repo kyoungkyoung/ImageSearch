@@ -4,7 +4,7 @@
 
 import 'dart:async' as _i3;
 
-import 'package:image_search_app/domain/model/image.dart' as _i4;
+import 'package:image_search_app/domain/model/pixabay_image.dart' as _i4;
 import 'package:image_search_app/domain/repository/image_repository.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;

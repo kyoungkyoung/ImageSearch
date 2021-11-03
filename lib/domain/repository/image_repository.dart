@@ -1,5 +1,5 @@
-import 'package:image_search_app/data/repository/pixabay_repository.dart';
-import 'package:image_search_app/domain/model/image.dart';
+
+import 'package:image_search_app/domain/model/pixabay_image.dart';
 
 abstract class ImageRepository{
 

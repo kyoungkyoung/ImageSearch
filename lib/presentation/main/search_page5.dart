@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'package:image_search_app/presentation/main/search_page5_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,9 @@ class _SearchPage5State extends State<SearchPage5> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<SearchPage5ViewModel>();
+    final state = viewModel.state;
+    List<PixabayImage> pixabayImage = state.pixabayImageList;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Image Search'),
@@ -75,14 +79,14 @@ class _SearchPage5State extends State<SearchPage5> {
               ),
             ),
           ),
-          viewModel.isLoading
+          state.isLoading
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  children: viewModel.pixabayImageList.map((pixabay) {
+                  children: pixabayImage.map((pixabay) {
                     return Column(
                       children: [
                         Image.network(
