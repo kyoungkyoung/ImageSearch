@@ -2,11 +2,12 @@
 // in image_search_app/test/search_page5_view_model_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:image_search_app/domain/model/pixabay_image.dart' as _i4;
+import 'package:image_search_app/data/data_source/result.dart' as _i2;
+import 'package:image_search_app/domain/model/pixabay_image.dart' as _i5;
 import 'package:image_search_app/domain/repository/image_repository.dart'
-    as _i2;
+    as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -18,20 +19,22 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
+class _FakeResult_0<T> extends _i1.Fake implements _i2.Result<T> {}
+
 /// A class which mocks [ImageRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockImageRepository extends _i1.Mock implements _i2.ImageRepository {
+class MockImageRepository extends _i1.Mock implements _i3.ImageRepository {
   MockImageRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<_i4.PixabayImage>> fetchList(String? search) =>
+  _i4.Future<_i2.Result<List<_i5.PixabayImage>>> fetchList(String? search) =>
       (super.noSuchMethod(Invocation.method(#fetchList, [search]),
-              returnValue:
-                  Future<List<_i4.PixabayImage>>.value(<_i4.PixabayImage>[]))
-          as _i3.Future<List<_i4.PixabayImage>>);
+              returnValue: Future<_i2.Result<List<_i5.PixabayImage>>>.value(
+                  _FakeResult_0<List<_i5.PixabayImage>>()))
+          as _i4.Future<_i2.Result<List<_i5.PixabayImage>>>);
   @override
   String toString() => super.toString();
 }

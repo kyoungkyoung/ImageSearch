@@ -2,6 +2,9 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:image_search_app/data/data_source/pixabay_api.dart';
+import 'package:image_search_app/data/data_source/result.dart';
+import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'package:image_search_app/domain/repository/image_repository.dart';
 import 'package:image_search_app/presentation/main/pixabay_image_state.dart';
 import 'package:provider/provider.dart';
@@ -20,15 +23,26 @@ class SearchPage5ViewModel with ChangeNotifier {
     // _state.isLoading = true;
     notifyListeners(); // isLoading이 바뀌었을때 한번 알려주고
 
-    final results = await repository.fetchList(query);
-    _state = _state.copyWith(
-        pixabayImageList: results
-            .getRange(
-              0,
-              min(10, results.length),
-            )
-            .toList(),
-        isLoading: false);
-    notifyListeners(); // isLoading이 또 바뀌면 다시 알려주고
+    final Result<List<PixabayImage>> results =
+        await repository.fetchList(query);
+
+    if (results is Success) {
+      final pixabayImageList = (results as Success<List<PixabayImage>>).data;
+      _state = _state.copyWith(
+          pixabayImageList: pixabayImageList
+              .getRange(
+                0,
+                min(10, pixabayImageList.length),
+              )
+              .toList(),
+          isLoading: false);
+      notifyListeners(); // isLoading이 또 바뀌면 다시 알려주고
+    } else if (results is Error) {
+      if ((results as Error).e is IllegalStateException) {
+        print('에러남 잘못함');
+      } else {
+        print((results as Error).e.toString());
+      }
+    }
   }
 }
