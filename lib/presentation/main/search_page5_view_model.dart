@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 
@@ -7,6 +8,7 @@ import 'package:image_search_app/data/data_source/result.dart';
 import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'package:image_search_app/domain/repository/image_repository.dart';
 import 'package:image_search_app/presentation/main/pixabay_image_state.dart';
+import 'package:image_search_app/presentation/main/ui_event.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage5ViewModel with ChangeNotifier {
@@ -17,6 +19,9 @@ class SearchPage5ViewModel with ChangeNotifier {
 
   SearchPage5ViewModel(this.repository);
 
+  final _eventController = StreamController<UiEvent>();
+  Stream<UiEvent> get eventStream => _eventController.stream;
+
   //test코드 작성 2
   Future<void> getFetchList(String query) async {
     _state = state.copyWith(isLoading: true);
@@ -26,8 +31,9 @@ class SearchPage5ViewModel with ChangeNotifier {
     final Result<List<PixabayImage>> results =
         await repository.fetchList(query);
 
-    if (results is Success) {
-      final pixabayImageList = (results as Success<List<PixabayImage>>).data;
+    if (results is Success<List<PixabayImage>>) {
+      // final pixabayImageList = (results as Success<List<PixabayImage>>).data;
+      final pixabayImageList = results.data;
       _state = _state.copyWith(
           pixabayImageList: pixabayImageList
               .getRange(
@@ -40,6 +46,9 @@ class SearchPage5ViewModel with ChangeNotifier {
     } else if (results is Error) {
       if ((results as Error).e is IllegalStateException) {
         print('에러남 잘못함');
+
+        //snackbar event
+        _eventController.add(UiEvent.showSnackBar('네트워크 에러가 발생했습니다'));
       } else {
         print((results as Error).e.toString());
       }

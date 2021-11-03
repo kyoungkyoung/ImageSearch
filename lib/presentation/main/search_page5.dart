@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'package:image_search_app/presentation/main/search_page5_view_model.dart';
+import 'package:image_search_app/presentation/main/ui_event.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage5 extends StatefulWidget {
@@ -16,8 +17,17 @@ class _SearchPage5State extends State<SearchPage5> {
 
   @override
   void initState() {
-    Future.microtask(
-        () => context.read<SearchPage5ViewModel>().getFetchList('iphone'));
+    Future.microtask(() {
+      // 초기값 뿌려주기
+      context.read<SearchPage5ViewModel>().getFetchList('iphone');
+      //snackbar event관찰
+      context.read<SearchPage5ViewModel>().eventStream.listen((event) {
+        if (event is ShowSnackBar) {
+          final snackBar = SnackBar(content: Text(event.message));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
+    });
     super.initState();
   }
 
