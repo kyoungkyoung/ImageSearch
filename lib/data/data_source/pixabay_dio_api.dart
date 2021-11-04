@@ -4,9 +4,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class PixabayDioApi {
-  Dio dio;
-
-  PixabayDioApi(this.dio);
 
   Future<List<PixabayImage>> fetchList(String search) async {
     try {
