@@ -22,10 +22,13 @@ class _SearchPage5State extends State<SearchPage5> {
       context.read<SearchPage5ViewModel>().getFetchList('iphone');
       //snackbar event관찰
       context.read<SearchPage5ViewModel>().eventStream.listen((event) {
-        if (event is ShowSnackBar) {
-          final snackBar = SnackBar(content: Text(event.message));
+        event.when(showSnackBar: (messaage) {
+          final snackBar = SnackBar(content: Text(messaage));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        }
+        }, endLoading: () {
+          const snackBar = SnackBar(content: Text('로딩이 완료되었습니다'));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
       });
     });
     super.initState();

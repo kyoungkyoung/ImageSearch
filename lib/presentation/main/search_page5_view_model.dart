@@ -19,20 +19,15 @@ class SearchPage5ViewModel with ChangeNotifier {
   SearchPage5ViewModel(this.repository);
 
   final _eventController = StreamController<UiEvent>();
+
   Stream<UiEvent> get eventStream => _eventController.stream;
 
   //test코드 작성 2
   Future<void> getFetchList(String query) async {
-    _state = state.copyWith(isLoading: true);
-    // _state.isLoading = true;
-    notifyListeners(); // isLoading이 바뀌었을때 한번 알려주고
-
     final Result<List<PixabayImage>> results =
         await repository.fetchList(query);
 
-    if (results is Success<List<PixabayImage>>) {
-      // final pixabayImageList = (results as Success<List<PixabayImage>>).data;
-      final pixabayImageList = results.data;
+    results.when(success: (pixabayImageList) {
       _state = _state.copyWith(
           pixabayImageList: pixabayImageList
               .getRange(
@@ -41,16 +36,20 @@ class SearchPage5ViewModel with ChangeNotifier {
               )
               .toList(),
           isLoading: false);
+      _eventController.add(const UiEvent.endLoading());
       notifyListeners(); // isLoading이 또 바뀌면 다시 알려주고
-    } else if (results is Error) {
-      if ((results as Error).e is IllegalStateException) {
+    }, error: (e) {
+      if ((e as Error).e is IllegalStateException) {
         print('에러남 잘못함');
 
         //snackbar event
-        _eventController.add(UiEvent.showSnackBar('네트워크 에러가 발생했습니다'));
+        _eventController.add(const UiEvent.showSnackBar('네트워크 에러가 발생했습니다'));
       } else {
         print((results as Error).e.toString());
       }
-    }
+    }, loading: (bool isLoading) {
+      _state = state.copyWith(isLoading: isLoading);
+      notifyListeners(); // isLoading이 바뀌었을때 한번 알려주고
+    });
   }
 }

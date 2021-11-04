@@ -1,15 +1,8 @@
-abstract class UiEvent {
- factory UiEvent.showSnackBar(String message) = ShowSnackBar;
- factory UiEvent.endLoading() = EndLoading;
-}
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'ui_event.freezed.dart';
 
-class ShowSnackBar implements UiEvent {
-  String message;
-
-  ShowSnackBar(this.message);
-}
-
-class EndLoading implements UiEvent {
-  // print('네트워크 통신 완료');
-  // EndLoading();
+@freezed
+abstract class UiEvent with _$UiEvent {
+  const factory UiEvent.showSnackBar(String message) = ShowSnackBar;
+  const factory UiEvent.endLoading() = EndLoading;
 }
