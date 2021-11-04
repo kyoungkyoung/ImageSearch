@@ -41,9 +41,11 @@ const $PixabayImageState = _$PixabayImageStateTearOff();
 /// @nodoc
 mixin _$PixabayImageState {
   List<PixabayImage> get pixabayImageList => throw _privateConstructorUsedError;
+
   bool get isLoading => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $PixabayImageStateCopyWith<PixabayImageState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -54,6 +56,7 @@ abstract class $PixabayImageStateCopyWith<$Res> {
   factory $PixabayImageStateCopyWith(
           PixabayImageState value, $Res Function(PixabayImageState) then) =
       _$PixabayImageStateCopyWithImpl<$Res>;
+
   $Res call({List<PixabayImage> pixabayImageList, bool isLoading});
 }
 
@@ -63,6 +66,7 @@ class _$PixabayImageStateCopyWithImpl<$Res>
   _$PixabayImageStateCopyWithImpl(this._value, this._then);
 
   final PixabayImageState _value;
+
   // ignore: unused_field
   final $Res Function(PixabayImageState) _then;
 
@@ -90,6 +94,7 @@ abstract class _$PixabayImageStateCopyWith<$Res>
   factory _$PixabayImageStateCopyWith(
           _PixabayImageState value, $Res Function(_PixabayImageState) then) =
       __$PixabayImageStateCopyWithImpl<$Res>;
+
   @override
   $Res call({List<PixabayImage> pixabayImageList, bool isLoading});
 }
@@ -180,8 +185,10 @@ abstract class _PixabayImageState implements PixabayImageState {
 
   @override
   List<PixabayImage> get pixabayImageList;
+
   @override
   bool get isLoading;
+
   @override
   @JsonKey(ignore: true)
   _$PixabayImageStateCopyWith<_PixabayImageState> get copyWith =>

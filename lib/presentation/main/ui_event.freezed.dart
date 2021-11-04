@@ -39,12 +39,14 @@ mixin _$UiEvent {
     required TResult Function() endLoading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
     TResult Function()? endLoading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? showSnackBar,
@@ -52,18 +54,21 @@ mixin _$UiEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ShowSnackBar value) showSnackBar,
     required TResult Function(EndLoading value) endLoading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ShowSnackBar value)? showSnackBar,
     TResult Function(EndLoading value)? endLoading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ShowSnackBar value)? showSnackBar,
@@ -84,6 +89,7 @@ class _$UiEventCopyWithImpl<$Res> implements $UiEventCopyWith<$Res> {
   _$UiEventCopyWithImpl(this._value, this._then);
 
   final UiEvent _value;
+
   // ignore: unused_field
   final $Res Function(UiEvent) _then;
 }
@@ -93,6 +99,7 @@ abstract class $ShowSnackBarCopyWith<$Res> {
   factory $ShowSnackBarCopyWith(
           ShowSnackBar value, $Res Function(ShowSnackBar) then) =
       _$ShowSnackBarCopyWithImpl<$Res>;
+
   $Res call({String message});
 }
 
@@ -215,6 +222,7 @@ abstract class ShowSnackBar implements UiEvent {
   const factory ShowSnackBar(String message) = _$ShowSnackBar;
 
   String get message;
+
   @JsonKey(ignore: true)
   $ShowSnackBarCopyWith<ShowSnackBar> get copyWith =>
       throw _privateConstructorUsedError;

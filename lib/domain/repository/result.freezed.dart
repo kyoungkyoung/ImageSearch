@@ -48,6 +48,7 @@ mixin _$Result<T> {
     required TResult Function(bool isLoading) loading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(T data)? success,
@@ -55,6 +56,7 @@ mixin _$Result<T> {
     TResult Function(bool isLoading)? loading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(T data)? success,
@@ -63,6 +65,7 @@ mixin _$Result<T> {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success<T> value) success,
@@ -70,6 +73,7 @@ mixin _$Result<T> {
     required TResult Function(Loading<T> value) loading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Success<T> value)? success,
@@ -77,6 +81,7 @@ mixin _$Result<T> {
     TResult Function(Loading<T> value)? loading,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success<T> value)? success,
@@ -98,6 +103,7 @@ class _$ResultCopyWithImpl<T, $Res> implements $ResultCopyWith<T, $Res> {
   _$ResultCopyWithImpl(this._value, this._then);
 
   final Result<T> _value;
+
   // ignore: unused_field
   final $Res Function(Result<T>) _then;
 }
@@ -106,6 +112,7 @@ class _$ResultCopyWithImpl<T, $Res> implements $ResultCopyWith<T, $Res> {
 abstract class $SuccessCopyWith<T, $Res> {
   factory $SuccessCopyWith(Success<T> value, $Res Function(Success<T>) then) =
       _$SuccessCopyWithImpl<T, $Res>;
+
   $Res call({T data});
 }
 
@@ -234,6 +241,7 @@ abstract class Success<T> implements Result<T> {
   const factory Success(T data) = _$Success<T>;
 
   T get data;
+
   @JsonKey(ignore: true)
   $SuccessCopyWith<T, Success<T>> get copyWith =>
       throw _privateConstructorUsedError;
@@ -243,6 +251,7 @@ abstract class Success<T> implements Result<T> {
 abstract class $ErrorCopyWith<T, $Res> {
   factory $ErrorCopyWith(Error<T> value, $Res Function(Error<T>) then) =
       _$ErrorCopyWithImpl<T, $Res>;
+
   $Res call({Exception e});
 }
 
@@ -370,6 +379,7 @@ abstract class Error<T> implements Result<T> {
   const factory Error(Exception e) = _$Error<T>;
 
   Exception get e;
+
   @JsonKey(ignore: true)
   $ErrorCopyWith<T, Error<T>> get copyWith =>
       throw _privateConstructorUsedError;
@@ -379,6 +389,7 @@ abstract class Error<T> implements Result<T> {
 abstract class $LoadingCopyWith<T, $Res> {
   factory $LoadingCopyWith(Loading<T> value, $Res Function(Loading<T>) then) =
       _$LoadingCopyWithImpl<T, $Res>;
+
   $Res call({bool isLoading});
 }
 
@@ -507,6 +518,7 @@ abstract class Loading<T> implements Result<T> {
   const factory Loading(bool isLoading) = _$Loading<T>;
 
   bool get isLoading;
+
   @JsonKey(ignore: true)
   $LoadingCopyWith<T, Loading<T>> get copyWith =>
       throw _privateConstructorUsedError;

@@ -4,7 +4,6 @@ import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'dart:convert';
 
 class PixabayApi {
-
   Future<List<PixabayImage>> fetchList(String search) async {
     try {
       String url =
@@ -12,11 +11,10 @@ class PixabayApi {
       final response = await http.get(Uri.parse(url));
       Iterable jsonResponse = jsonDecode(response.body)['hits'];
       List<PixabayImage> list =
-      jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
+          jsonResponse.map((e) => PixabayImage.fromJson(e)).toList();
       return list;
     } catch (e) {
       throw IllegalStateException('네티워크 에러');
     }
   }
-
 }
