@@ -4,13 +4,15 @@ import 'package:image_search_app/presentation/main/search_page5.dart';
 import 'package:image_search_app/presentation/main/search_page5_view_model.dart';
 import 'package:provider/provider.dart';
 
+import 'data/repository/pixabay_repository.dart';
+
 void main() {
   runApp(
     MultiProvider(
       providers: [
         // ChangeNotifierProvider.value(value: SearchPage5ViewModel(PixabayApi()))
         ChangeNotifierProvider(
-          create: (_) => SearchPage5ViewModel(PixabayApi()),
+          create: (_) => SearchPage5ViewModel(PixabayRepository(PixabayApi())),
         ),
       ],
       child: const MyApp(),

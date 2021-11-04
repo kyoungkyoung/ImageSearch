@@ -4,12 +4,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_search_app/data/data_source/pixabay_api.dart';
-import 'package:image_search_app/data/data_source/result.dart';
+import 'package:image_search_app/domain/repository/result.dart';
 import 'package:image_search_app/domain/model/pixabay_image.dart';
 import 'package:image_search_app/domain/repository/image_repository.dart';
 import 'package:image_search_app/presentation/main/pixabay_image_state.dart';
 import 'package:image_search_app/presentation/main/ui_event.dart';
-import 'package:provider/provider.dart';
 
 class SearchPage5ViewModel with ChangeNotifier {
   ImageRepository repository;
